@@ -22,9 +22,11 @@ background-color=#222436
 text-color=#F2F2F2
 
 [urgency=normal]
+text-color=#222222
 background-color=#82AAFF
 
 [urgency=critical]
+text-color=#222222
 background-color=#F38BA8
 
 
