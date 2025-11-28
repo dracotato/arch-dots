@@ -3,5 +3,12 @@ return {
   build = ":Cord update",
   opts = {
     display = { theme = "catppuccin", flavor = "accent" },
+    advanced = {
+      discord = {
+        reconnect = {
+          enabled = true,
+        },
+      },
+    },
   },
 }
