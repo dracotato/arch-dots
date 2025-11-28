@@ -13,7 +13,7 @@ wk.add({
   { "<leader>e", oil.toggle_float, desc = "Open Oil" },
   { "<leader>l", ":Lazy<CR>", desc = "Lazy" },
   { "<leader>qq", ":qa!<CR>", desc = "Quit All (force)" },
-  { "<leader>wqa", ":wqa<CR>", desc = "Quit All (saving)" },
+  { "<leader>qw", ":wqa<CR>", desc = "Quit All (saving)" },
   -- Telescope
   { "<leader>f", group = "Find" },
   { "<leader><leader>", builtin.find_files, desc = "Telescope Find File" },
@@ -30,57 +30,60 @@ wk.add({
   { "<leader>cl", vim.diagnostic.setloclist, desc = "Open Diagnostic List" },
   { "<leader>cf", conform.format, desc = "Code Format" },
   -- Buffers
-  { "<S-h>", ":bprevious<CR>", desc = "Buffer Previous" },
-  { "<S-l>", ":bnext<CR>", desc = "Buffer Next" },
   { "<leader>b", group = "Buffer" },
-  { "<leader>bd", ":bd<CR>", desc = "Buffer Delete" },
   { "<leader>bn", ":bnext<CR>", desc = "Buffer Next" },
   { "<leader>bp", ":bprevious<CR>", desc = "Buffer Previous" },
+  { "<leader>bd", ":bd<CR>", desc = "Buffer Delete" },
   { "<leader>bo", ":%bd|e#|bd#<CR>", desc = "Buffer Close others" },
+  { "<S-l>", ":bnext<CR>", desc = "Buffer Next" },
+  { "<S-h>", ":bprevious<CR>", desc = "Buffer Previous" },
+  { "]b", ":bnext<CR>", desc = "Buffer Next" },
+  { "[b", ":previous<CR>", desc = "Buffer Previous" },
   -- Terminal
   { "<leader>t", group = "Terminal" },
-  { "<leader>tt", ":split term:///bin/zsh<CR>a", desc = "Open Terminal Horizontal (zsh)" },
-  { "<leader>tn", ":terminal<CR>a", desc = "Open Terminal New Tab" },
-  { "<leader>tv", ":vsplit term:///bin/zsh<CR>a", desc = "Open Terminal Vertical (zsh)" },
+  { "<leader>tt", ":terminal<CR>a", desc = "Open Terminal New Buffer" },
   -- Git
   { "<leader>g", group = "Git" },
+  { "<leader>gs", builtin.git_status, desc = "Git Status" },
+  { "<leader>gS", builtin.git_stash, desc = "Git Stash" },
   { "<leader>gc", builtin.git_commits, desc = "Git Commits" },
   { "<leader>gl", gitsigns.blame_line, desc = "Git Blame line" },
   { "<leader>gL", gitsigns.blame, desc = "Git Blame file" },
-  { "<leader>gba", gitsigns.stage_buffer, desc = "Git Buffer Stage" },
+  { "<leader>gbs", gitsigns.stage_buffer, desc = "Git Buffer Stage" },
   { "<leader>gbr", gitsigns.reset_buffer, desc = "Git Buffer Reset" },
-  { "<leader>gh", gitsigns.preview_hunk_inline, desc = "Git Hunk preview under cursor" },
-  { "<leader>gha", gitsigns.stage_hunk, desc = "Git Hunk Stage" },
+  { "<leader>gbR", gitsigns.reset_buffer, desc = "Git Buffer Reset (index)" },
+  { "<leader>ghp", gitsigns.preview_hunk_inline, desc = "Git Hunk preview under cursor" },
+  { "<leader>ghs", gitsigns.stage_hunk, desc = "Git Hunk Stage" },
   { "<leader>ghr", gitsigns.reset_hunk, desc = "Git Hunk Reset" },
   {
-    "<leader>ghn",
+    "]g",
     function()
       gitsigns.nav_hunk("next")
     end,
-    desc = "Git Hunk Next",
+    desc = "Next Git Hunk",
   },
   {
-    "<leader>ghp",
+    "[g",
     function()
       gitsigns.nav_hunk("prev")
     end,
-    desc = "Git Hunk Previous",
+    desc = "Previous Git Hunk",
   },
   {
-    "<leader>ghN",
+    "]G",
     function()
       gitsigns.nav_hunk("last")
     end,
-    desc = "Git Hunk Last",
+    desc = "Last Git Hunk",
   },
   {
-    "<leader>ghP",
+    "[G",
     function()
       gitsigns.nav_hunk("first")
     end,
-    desc = "Git Hunk First",
+    desc = "First Git Hunk",
   },
-  { "<leader>gsh", gitsigns.select_hunk, desc = "Git Select Hunk under cursor" },
+  { "<leader>ghv", gitsigns.select_hunk, desc = "Git Select Hunk under cursor" },
   -- Window
   { "<leader>w", proxy = "<C-w>", desc = "Window" },
   { "<C-h>", "<C-w>h" },
