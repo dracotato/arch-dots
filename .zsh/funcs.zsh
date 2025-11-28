@@ -4,7 +4,19 @@ pj() {
     cd ~/projects/
     return
   fi
-  dir=$(fd $1 ~/projects -d=4 -t=d | awk 'NR==1 {print}')
+  matches=$(find ~/projects -maxdepth 3 -type d -regex ".*$1.*")
+  dir=$(echo $matches | awk 'NR==1 {print}')
+  cd $dir
+}
+
+# ease access to dots
+dt() {
+  if [[ -z $1 ]]; then
+    cd ~/projects/
+    return
+  fi
+  matches=$(find ~/.dots -maxdepth 3 -type d -regex ".*$1.*")
+  dir=$(echo $matches | awk 'NR==1 {print}')
   cd $dir
 }
 
@@ -19,3 +31,4 @@ precmd() { venv; }
 
 # completions
 compdef '_files -W ~/projects/' pj
+compdef '_files -W ~/.dots/' dt
