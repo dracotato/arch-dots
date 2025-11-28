@@ -3,6 +3,7 @@ allow_images=true
 hide_scroll=true
 
 insensitive=true
+matching=fuzzy
 
 term=kitty
 
