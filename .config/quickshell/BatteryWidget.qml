@@ -4,9 +4,8 @@ import QtQuick.Effects
 
 RowLayout {
   readonly property Text text: text
-  // will this be re-evalauted when percentage changes? guess we'll find out soon
   property string iconPath: {
-    if (Battery.percentage == 100) {
+    if (Battery.percentage >= 95) {
       return "full"
     } else if (Battery.percentage >= 90) {
       return "6bar"
