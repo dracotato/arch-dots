@@ -7,6 +7,7 @@ RowLayout {
   property string color: {
     if (Battery.percentage >= 20) {
       return "#FFF"
+      animateOpacity.stop()
     } else {
       animateOpacity.start()
       return "#F22"
