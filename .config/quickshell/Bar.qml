@@ -13,7 +13,7 @@ Scope {
       screen: modelData
 
       property real margin: 8
-      property string bgcolor: "#0F0F0F"
+      property string bgcolor: "#111"
       property string textcolor: "#eee"
 
       implicitWidth: container.implicitWidth + margin * 2

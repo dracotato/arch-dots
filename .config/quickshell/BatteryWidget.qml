@@ -1,5 +1,5 @@
 import QtQuick
 
 Text {
-  text: `${Battery.percentage*100}%`
+  text: `${Battery.percentage}%`
 }
