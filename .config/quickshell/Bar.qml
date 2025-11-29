@@ -53,9 +53,9 @@ Scope {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.rightMargin: 8
 
-            color: textcolor
-            font.weight: 500
-            font.pointSize: 12
+            text.color: textcolor
+            text.font.weight: 500
+            text.font.pointSize: 12
           }
         }
       }
