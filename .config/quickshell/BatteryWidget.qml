@@ -4,6 +4,14 @@ import QtQuick.Effects
 
 RowLayout {
   readonly property Text text: text
+  property string color: {
+    if (Battery.percentage >= 20) {
+      return "#FFF"
+    } else {
+      animateOpacity.start()
+      return "#F22"
+    }
+  }
   property string iconPath: {
     if (Battery.percentage >= 95) {
       return "full"
@@ -23,20 +31,36 @@ RowLayout {
       return "0bar"
     }
   }
+  spacing: 2
 
   Image {
     id: icon
+
     source: `./assets/battery-${iconPath}.svg`
     visible: false
   }
   MultiEffect {
+    id: iconEffect
+
     source: icon
     anchors.fill: icon
     colorization: 1
-    colorizationColor: "#FFF" // controls the color of the icon
+    colorizationColor: color // controls the color of the icon
+
+    NumberAnimation {
+      id: animateOpacity
+
+      target: iconEffect
+      properties: "opacity"
+      from: 0.6
+      to: 1.0
+      loops: Animation.Infinite
+      duration: 400
+    }
   }
   Text {
     id: text
+
     text: `${Battery.percentage}%`
   }
 }
