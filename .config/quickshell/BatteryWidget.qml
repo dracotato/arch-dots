@@ -2,61 +2,50 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 
+
 RowLayout {
+  readonly property string assetsPath: "assets"
   readonly property Text text: text
   property string color: {
     if (Battery.percentage >= 20) {
       return "#FFF"
-      animateOpacity.stop()
     } else {
       animateOpacity.start()
       return "#F22"
     }
   }
-  property string iconPath: {
-    if (Battery.percentage >= 95) {
-      return "full"
-    } else if (Battery.percentage >= 90) {
-      return "6bar"
-    } else if (Battery.percentage >= 75) {
-      return "5bar"
-    } else if (Battery.percentage >= 60) {
-      return "4bar"
-    } else if (Battery.percentage >= 45) {
-      return "3bar"
-    } else if (Battery.percentage >= 30) {
-      return "2bar"
-    } else if (Battery.percentage >= 20) {
-      return "1bar"
-    } else if (Battery.percentage < 20) {
-      return "0bar"
-    }
-  }
   spacing: 2
 
-  Image {
-    id: icon
+  function updateIcon() {
+    let size = 22;
+    let properties = {"implicitHeight": size, "implicitWidth": size};
 
-    source: `./assets/battery-${iconPath}.svg`
-    visible: false
+    if (Battery.percentage >= 95) {
+      iconLoader.setSource(`${assetsPath}/BatteryFull.qml`, properties)
+    } else if (Battery.percentage >= 90) {
+      iconLoader.setSource(`${assetsPath}/Battery6bar.qml`, properties)
+    } else if (Battery.percentage >= 75) {
+      iconLoader.setSource(`${assetsPath}/Battery5bar.qml`, properties)
+    } else if (Battery.percentage >= 60) {
+      iconLoader.setSource(`${assetsPath}/Battery4bar.qml`, properties)
+    } else if (Battery.percentage >= 45) {
+      iconLoader.setSource(`${assetsPath}/Battery3bar.qml`, properties)
+    } else if (Battery.percentage >= 30) {
+      iconLoader.setSource(`${assetsPath}/Battery2bar.qml`, properties)
+    } else if (Battery.percentage >= 20) {
+      iconLoader.setSource(`${assetsPath}/Battery1bar.qml`, properties)
+    } else if (Battery.percentage < 20) {
+      iconLoader.setSource(`${assetsPath}/Battery0bar.qml`, properties)
+    }
   }
-  MultiEffect {
-    id: iconEffect
 
-    source: icon
-    anchors.fill: icon
-    colorization: 1
-    colorizationColor: color // controls the color of the icon
+  Loader {
+    id: iconLoader
+    sourceComponent: updateIcon() // initial icon setup
 
-    NumberAnimation {
-      id: animateOpacity
-
-      target: iconEffect
-      properties: "opacity"
-      from: 0.6
-      to: 1.0
-      loops: Animation.Infinite
-      duration: 400
+    Connections {
+      target: Battery
+      onPercentageChanged: updateIcon()
     }
   }
   Text {
