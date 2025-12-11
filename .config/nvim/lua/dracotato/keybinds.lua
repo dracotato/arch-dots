@@ -16,7 +16,7 @@ wk.add({
   { "<leader>qw", ":wqa<CR>", desc = "Quit All (saving)" },
   -- Telescope
   { "<leader>f", group = "Find" },
-  { "<leader><leader>", builtin.find_files, desc = "Telescope Find File" },
+  { "<leader>p", builtin.find_files, desc = "Telescope Find File" },
   { "<leader>fb", builtin.buffers, desc = "Telescope Find Buffer" },
   { "<leader>f.", builtin.resume, desc = "Telescope Repeat search" },
   { "<leader>/", builtin.live_grep, desc = "Grep Files" },
@@ -34,7 +34,8 @@ wk.add({
   { "<leader>bn", ":bnext<CR>", desc = "Buffer Next" },
   { "<leader>bp", ":bprevious<CR>", desc = "Buffer Previous" },
   { "<leader>bd", ":bd<CR>", desc = "Buffer Delete" },
-  { "<leader>bo", ":%bd|e#|bd#<CR>", desc = "Buffer Close others" },
+  -- delete all buffers before and after this one
+  { "<leader>bo", ":1,.-bd|.+,$bd<CR>", desc = "Buffer Close others" },
   { "<S-l>", ":bnext<CR>", desc = "Buffer Next" },
   { "<S-h>", ":bprevious<CR>", desc = "Buffer Previous" },
   { "]b", ":bnext<CR>", desc = "Buffer Next" },
