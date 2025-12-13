@@ -15,6 +15,10 @@ vim.o.laststatus = 3
 
 vim.o.signcolumn = "yes"
 
+vim.o.foldcolumn = "1"
+vim.o.foldmethod = "indent"
+vim.o.foldenable = false -- open folds on startup
+
 vim.o.completeopt = "menu,menuone,noselect"
 
 vim.o.virtualedit = "block"
@@ -41,6 +45,12 @@ vim.o.splitbelow = true
 
 vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  foldsep = " ",
+}
 
 vim.o.inccommand = "split"
 
