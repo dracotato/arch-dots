@@ -12,7 +12,7 @@ pj() {
 # ease access to dots
 dt() {
   if [[ -z $1 ]]; then
-    cd ~/projects/
+    cd ~/.dots/
     return
   fi
   matches=$(find ~/.dots -maxdepth 3 -type d -regex ".*$1.*")
