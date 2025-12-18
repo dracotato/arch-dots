@@ -45,7 +45,7 @@ Scope {
 
             color: textcolor
             font.weight: 500
-            font.pointSize: 12
+            font.pixelSize: 16
           }
 
           Row {
@@ -69,7 +69,7 @@ Scope {
 
               text.color: textcolor
               text.font.weight: 500
-              text.font.pointSize: 12
+              text.font.pixelSize: 16
             }
 
             NetworkWidget {
@@ -81,7 +81,7 @@ Scope {
 
               text.color: textcolor
               text.font.weight: 500
-              text.font.pointSize: 12
+              text.font.pixelSize: 16
             }
           }
         }
