@@ -1,7 +1,5 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
 
 
 Scope {
@@ -12,12 +10,14 @@ Scope {
       required property var modelData
       screen: modelData
 
-      property real margin: 8
+      property real outerMargin: 8
+      property real moduleMargin: 32
+      property real componentMargin: 8
+
       property string bgcolor: "#111"
       property string textcolor: "#eee"
 
-      implicitWidth: container.implicitWidth + margin * 2
-      implicitHeight: container.implicitHeight + margin * 2
+      height: 48
 
       color: "transparent"
 
@@ -32,30 +32,57 @@ Scope {
 
         color: bgcolor
 
-        RowLayout {
+        Row {
           id: container
+
           anchors.fill: parent
+          anchors.margins: outerMargin
 
           ClockWidget {
             id: clock
-            anchors.centerIn: parent
 
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            anchors.centerIn: parent
 
             color: textcolor
             font.weight: 500
             font.pointSize: 12
           }
 
-          BatteryWidget {
-            id: battery
+          Row {
+            id: statsContainer
 
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            Layout.rightMargin: 8
+            anchors.top: parent.top
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.left: clock.right
+            anchors.leftMargin: moduleMargin
 
-            text.color: textcolor
-            text.font.weight: 500
-            text.font.pointSize: 12
+            spacing: componentMargin
+            layoutDirection: Qt.RightToLeft
+
+            BatteryWidget {
+              id: battery
+
+              anchors.top: parent.top
+              anchors.bottom: parent.bottom
+              anchors.verticalCenter: parent.verticalCenter
+
+              text.color: textcolor
+              text.font.weight: 500
+              text.font.pointSize: 12
+            }
+
+            NetworkWidget {
+              id: network
+
+              anchors.top: parent.top
+              anchors.bottom: parent.bottom
+              anchors.verticalCenter: parent.verticalCenter
+
+              text.color: textcolor
+              text.font.weight: 500
+              text.font.pointSize: 12
+            }
           }
         }
       }

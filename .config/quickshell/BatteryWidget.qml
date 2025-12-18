@@ -1,24 +1,23 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
+
+import qs.services
 
 
-RowLayout {
+Row {
   readonly property string assetsPath: "assets"
   readonly property Text text: text
   property string color: {
     if (Battery.percentage >= 20) {
       return "#FFF"
     } else {
-      animateOpacity.start()
       return "#F22"
     }
   }
   spacing: 2
 
   function updateIcon() {
-    let size = 22;
-    let properties = {"implicitHeight": size, "implicitWidth": size};
+    let size = 20;
+    let properties = {"height": size, "width": size, "color": color};
 
     if (Battery.percentage >= 95) {
       iconLoader.setSource(`${assetsPath}/BatteryFull.qml`, properties)
@@ -43,6 +42,8 @@ RowLayout {
     id: iconLoader
     sourceComponent: updateIcon() // initial icon setup
 
+    anchors.verticalCenter: parent.verticalCenter
+
     Connections {
       target: Battery
       onPercentageChanged: updateIcon()
@@ -50,6 +51,8 @@ RowLayout {
   }
   Text {
     id: text
+
+    anchors.verticalCenter: parent.verticalCenter
 
     text: `${Battery.percentage}%`
   }
