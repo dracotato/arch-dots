@@ -17,7 +17,7 @@ Scope {
       property string bgcolor: "#111"
       property string textcolor: "#eee"
 
-      height: 48
+      implicitHeight: 48
 
       color: "transparent"
 
@@ -43,9 +43,9 @@ Scope {
 
             anchors.centerIn: parent
 
-            color: textcolor
-            font.weight: 500
-            font.pixelSize: 16
+            textColor: textcolor
+            fontWeight: 500
+            fontSize: 16
           }
 
           Row {
@@ -67,9 +67,9 @@ Scope {
               anchors.bottom: parent.bottom
               anchors.verticalCenter: parent.verticalCenter
 
-              text.color: textcolor
-              text.font.weight: 500
-              text.font.pixelSize: 16
+              textColor: textcolor
+              fontWeight: 500
+              fontSize: 16
             }
 
             NetworkWidget {
@@ -79,9 +79,9 @@ Scope {
               anchors.bottom: parent.bottom
               anchors.verticalCenter: parent.verticalCenter
 
-              text.color: textcolor
-              text.font.weight: 500
-              text.font.pixelSize: 16
+              textColor: textcolor
+              fontWeight: 500
+              fontSize: 16
             }
           }
         }

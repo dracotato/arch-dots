@@ -5,52 +5,76 @@ import qs.services
 
 Row {
   readonly property string assetsPath: "assets"
-  readonly property Text text: text
-  property string color: {
-    if (Battery.percentage >= 20) {
-      return "#FFF"
-    } else {
-      return "#F22"
-    }
-  }
-  spacing: 2
+
+  property string textColor: "#eee"
+  property real fontSize: 16
+  property real fontWeight: 500
+
+  property string icon: updateIcon()
+  property string iconColor // updateIcon sets this
+  property real iconSize: 18
 
   function updateIcon() {
-    let size = 20;
-    let properties = {"height": size, "width": size, "color": color};
 
-    if (Battery.percentage >= 95) {
-      iconLoader.setSource(`${assetsPath}/BatteryFull.qml`, properties)
+    if (Battery.percentage == 100) {
+      icon =  Battery.isCharging ? '󰂄' : '󰁹'
     } else if (Battery.percentage >= 90) {
-      iconLoader.setSource(`${assetsPath}/Battery6bar.qml`, properties)
-    } else if (Battery.percentage >= 75) {
-      iconLoader.setSource(`${assetsPath}/Battery5bar.qml`, properties)
+      icon =  Battery.isCharging ? '󰂋' : '󰂂'
+    } else if (Battery.percentage >= 80) {
+      icon =  Battery.isCharging ? '󰂊' : '󰂁'
+    } else if (Battery.percentage >= 70) {
+      icon =  Battery.isCharging ? '󰢞' : '󰂀'
     } else if (Battery.percentage >= 60) {
-      iconLoader.setSource(`${assetsPath}/Battery4bar.qml`, properties)
-    } else if (Battery.percentage >= 45) {
-      iconLoader.setSource(`${assetsPath}/Battery3bar.qml`, properties)
+      icon =  Battery.isCharging ? '󰂉' : '󰁿'
+    } else if (Battery.percentage >= 50) {
+      icon =  Battery.isCharging ? '󰢝' : '󰁾'
+    } else if (Battery.percentage >= 40) {
+      icon =  Battery.isCharging ? '󰂈' : '󰁽'
     } else if (Battery.percentage >= 30) {
-      iconLoader.setSource(`${assetsPath}/Battery2bar.qml`, properties)
+      icon =  Battery.isCharging ? '󰂇' : '󰁼'
     } else if (Battery.percentage >= 20) {
-      iconLoader.setSource(`${assetsPath}/Battery1bar.qml`, properties)
-    } else if (Battery.percentage < 20) {
-      iconLoader.setSource(`${assetsPath}/Battery0bar.qml`, properties)
+      icon =  Battery.isCharging ? '󰂆' : '󰁻'
+    } else if (Battery.percentage >= 10) {
+      icon =  Battery.isCharging ? '󰢜' : '󰁺'
+    } else if (Battery.percentage < 10) {
+      icon =  Battery.isCharging ? '󰢟' : '󰂎'
+    }
+
+    if (Battery.percentage < 25) {
+      iconColor = "#f22"
+    } else {
+      iconColor = textColor
     }
   }
 
-  Loader {
-    id: iconLoader
-    sourceComponent: updateIcon() // initial icon setup
+  Connections {
+    target: Battery
+    function onPercentageChanged() {
+      updateIcon()
+    }
+  }
+
+  spacing: 2
+
+  Text {
+    id: iconText
+
+    color: iconColor
+    font.pixelSize: iconSize
+    font.weight: fontWeight
 
     anchors.verticalCenter: parent.verticalCenter
 
-    Connections {
-      target: Battery
-      onPercentageChanged: updateIcon()
-    }
+    text: icon
+
   }
+
   Text {
     id: text
+
+    color: textColor
+    font.pixelSize: fontSize
+    font.weight: fontWeight
 
     anchors.verticalCenter: parent.verticalCenter
 
