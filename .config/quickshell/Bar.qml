@@ -12,7 +12,7 @@ Scope {
 
       property real outerMargin: 8
       property real moduleMargin: 32
-      property real componentMargin: 8
+      property real componentMargin: 12
 
       property string bgcolor: "#111"
       property string textcolor: "#eee"

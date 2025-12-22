@@ -1,21 +1,42 @@
 import QtQuick
+import Quickshell.Io
 
 import qs.services
 
-Row {
-  property string textColor: "#eee"
-  property real fontSize: 16
-  property real fontWeight: 500
 
-  Text {
-    id: text
+IconText {
+  textContent: Network.name ? Network.name : "N/A"
+  icon: updateIcon(Network.status, Network.strength)
 
-    color: textColor
-    font.pixelSize: fontSize
-    font.weight: fontWeight
+  function updateIcon(status, strength) {
+    if (status && status != "802-11-wireless") {
+      icon = ""
+      return
+    }
 
-    anchors.verticalCenter: parent.verticalCenter
+    if (!strength) {
+      icon = "󰤮"
+      return
+    }
 
-    text: `${Network.name}`
+    if (strength >= 80) {
+      icon = "󰤨"
+    } else if (strength >= 60) {
+      icon = "󰤥"
+    } else if (strength >= 40) {
+      icon = "󰤢"
+    } else if (strength >= 20) {
+      icon = "󰤟"
+    } else {
+      icon = "󰤯"
+    }
   }
+
+  Connections {
+    target: Network
+    function onStrengthChanged() {
+      updateIcon(Network.status, Network.strength)
+    }
+  }
+
 }

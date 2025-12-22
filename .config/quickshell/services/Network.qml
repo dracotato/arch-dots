@@ -6,26 +6,44 @@ import QtQuick
 
 Singleton {
   id: root
-  property string name: ""
+  property string name
+  property string status
+  property real strength
 
   Process {
     id: netProc
 
-    command: ["sh", "-c", "nmcli -t -f NAME c show --active | grep -vw 'lo' | head -1"]
+    // get connected network type and name, exclude loopback devices
+    command: ["sh", "-c", "nmcli -t -f TYPE,NAME con show --active | grep -v '^loopback:' | head -1"]
 
     running: true
 
     stdout: StdioCollector {
-      onStreamFinished: root.name = this.text
+      onStreamFinished: {
+        root.status = this.text ? this.text.split(":")[0] : ""
+        root.name = this.text ? this.text.split(":")[1] : ""
+      }
+    }
+  }
+
+  Process {
+    id: sigProc
+    running: true
+    command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*' | awk -F ':' '{print $2}'" ]
+    stdout: StdioCollector {
+      onStreamFinished: root.strength = this.text
     }
   }
 
   Timer {
-    interval: 2000
+    interval: 5000
 
     running: true
     repeat: true
 
-    onTriggered: netProc.running = true
+    onTriggered: {
+      netProc.running = true
+      sigProc.running = true
+    }
   }
 }
