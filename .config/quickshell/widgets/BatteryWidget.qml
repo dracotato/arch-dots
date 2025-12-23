@@ -1,6 +1,7 @@
 import QtQuick
 
 import qs.services
+import qs.components
 
 
 IconText {
@@ -42,6 +43,9 @@ IconText {
   Connections {
     target: Battery
     function onPercentageChanged() {
+      updateIcon()
+    }
+    function onIsChargingChanged() {
       updateIcon()
     }
   }

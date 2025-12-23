@@ -1,7 +1,7 @@
 import QtQuick
-import Quickshell.Io
 
 import qs.services
+import qs.components
 
 
 IconText {

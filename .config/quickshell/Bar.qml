@@ -1,6 +1,7 @@
 import Quickshell
 import QtQuick
 
+import qs.widgets
 
 Scope {
   Variants {
@@ -10,9 +11,9 @@ Scope {
       required property var modelData
       screen: modelData
 
-      property real outerMargin: 8
-      property real moduleMargin: 32
-      property real componentMargin: 12
+      property real outerMargin: 8 // screen gap
+      property real moduleGap: 32
+      property real componentGap: 12
 
       property string bgcolor: "#111"
       property string textcolor: "#eee"
@@ -32,57 +33,58 @@ Scope {
 
         color: bgcolor
 
+        ClockWidget {
+          id: clock
+
+          anchors.centerIn: parent
+
+          textColor: textcolor
+          fontWeight: 500
+          fontSize: 16
+        }
+
         Row {
-          id: container
+          id: statsContainer
 
-          anchors.fill: parent
-          anchors.margins: outerMargin
+          anchors.top: parent.top
+          anchors.right: parent.right
+          anchors.bottom: parent.bottom
+          anchors.left: clock.right
+          anchors.leftMargin: moduleGap // gap between clock
+          anchors.rightMargin: outerMargin // gap between screen
 
-          ClockWidget {
-            id: clock
+          spacing: componentGap
+          layoutDirection: Qt.RightToLeft
 
-            anchors.centerIn: parent
+
+          BatteryWidget {
+            id: battery
+
+            anchors.verticalCenter: parent.verticalCenter
 
             textColor: textcolor
             fontWeight: 500
             fontSize: 16
           }
 
-          Row {
-            id: statsContainer
+          NetworkWidget {
+            id: network
 
-            anchors.top: parent.top
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.left: clock.right
-            anchors.leftMargin: moduleMargin
+            anchors.verticalCenter: parent.verticalCenter
 
-            spacing: componentMargin
-            layoutDirection: Qt.RightToLeft
+            textColor: textcolor
+            fontWeight: 500
+            fontSize: 16
+          }
 
-            BatteryWidget {
-              id: battery
+          LayoutWidget {
+            id: layout
 
-              anchors.top: parent.top
-              anchors.bottom: parent.bottom
-              anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
-              textColor: textcolor
-              fontWeight: 500
-              fontSize: 16
-            }
-
-            NetworkWidget {
-              id: network
-
-              anchors.top: parent.top
-              anchors.bottom: parent.bottom
-              anchors.verticalCenter: parent.verticalCenter
-
-              textColor: textcolor
-              fontWeight: 500
-              fontSize: 16
-            }
+            textColor: textcolor
+            fontWeight: 500
+            fontSize: 16
           }
         }
       }
