@@ -10,5 +10,15 @@ return {
         },
       },
     },
+    buttons = {
+      {
+        label = function(opts)
+          return opts.repo_url and "View Repo"
+        end,
+        url = function(opts)
+          return opts.repo_url
+        end,
+      },
+    },
   },
 }
