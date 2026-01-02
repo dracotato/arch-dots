@@ -12,7 +12,7 @@ Singleton {
 
   function setLayout(layout) {
     root.layout = layout;
-    root.layoutAbbr = layout.substring(0, 2);
+    root.layoutAbbr = layout.substring(0, 2).toUpperCase();
   }
 
   Process {
