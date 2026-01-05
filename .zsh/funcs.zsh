@@ -1,23 +1,47 @@
-# easy access to the projects directory
-pj() {
-  if [[ -z $1 ]]; then
-    cd ~/projects/
+# h[ome]f[ind]
+hf() {
+  if $(echo "$@" | tr ' ' '\n' | grep -Fqx -- '-h') || [[ -z "$1" ]]; then
+    cat << EOF
+Fuzzy directory changing for your home directory.
+
+Usage: $0 <target-dir> [search-directory] [v|vi|vim]
+
+[search-directory]: default is your home directory.
+[v|vi|vim]: launches nvim after changing to the directory.
+EOF
     return
   fi
-  matches=$(find ~/projects -maxdepth 3 -type d -regex ".*$1.*")
+
+  if [[ -z $1 ]]; then
+    cd "~/$1"
+    return
+  fi
+
+  pattern="^vi?m?$"
+  target=$1
+  dir=""
+
+  if [[ ! $@[2] =~ $pattern ]]; then
+    dir=$2
+  fi
+
+  matches=$(find "$HOME/$dir" -maxdepth 3 -type d -regex ".*$target.*")
   dir=$(echo $matches | awk 'NR==1 {print}')
   cd $dir
+
+  if [[ ${@[-1]} =~ $pattern ]]; then
+    nvim .
+  fi
 }
 
-# ease access to dots
+# convenient wrapper to search just projects
+pj() {
+  hf projects $@
+}
+
+# convenient wrapper to search just dots
 dt() {
-  if [[ -z $1 ]]; then
-    cd ~/.dots/
-    return
-  fi
-  matches=$(find ~/.dots -maxdepth 3 -type d -regex ".*$1.*")
-  dir=$(echo $matches | awk 'NR==1 {print}')
-  cd $dir
+  hf .dots $@
 }
 
 # automatically activate python venvs
@@ -30,5 +54,6 @@ venv() {
 precmd() { venv; }
 
 # completions
+compdef '_files -W ~/' hf
 compdef '_files -W ~/projects/' pj
 compdef '_files -W ~/.dots/' dt
