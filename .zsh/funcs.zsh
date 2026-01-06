@@ -12,11 +12,6 @@ EOF
     return
   fi
 
-  if [[ -z $1 ]]; then
-    cd "~/$1"
-    return
-  fi
-
   pattern="^vi?m?$"
   target=$1
   dir=""
@@ -36,12 +31,12 @@ EOF
 
 # convenient wrapper to search just projects
 pj() {
-  hf projects $@
+  hf $1 projects $2
 }
 
 # convenient wrapper to search just dots
 dt() {
-  hf .dots $@
+  hf $1 .dots $2
 }
 
 # automatically activate python venvs
