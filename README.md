@@ -16,16 +16,6 @@
 - Color Picker Utility: **hyprpicker**
 - Wallpaper Utility: **hyprpaper**
 - Wallpaper Manager: **waypaper**
-- Dynamic Color Palette: **py-wal**
-
-**Note for Waypaper**
-add this:
-
-```bash
-post_command = $HOME/.config/hypr/scripts/post-wallpaper.sh $wallpaper
-```
-
-To `.config/waypaper/config.ini`
 
 ## Installation
 
