@@ -13,6 +13,7 @@ wk.add({
   { "<leader>e", oil.toggle_float, desc = "Open Oil" },
   { "<leader>l", ":Lazy<CR>", desc = "Lazy" },
   { "<leader>qq", ":qa!<CR>", desc = "Quit All (force)" },
+  { "<leader>qu", ":suspend<CR>", desc = "Suspend Session" },
   { "<leader>qw", ":wqa<CR>", desc = "Quit All (saving)" },
   -- Telescope
   { "<leader>f", group = "Find" },

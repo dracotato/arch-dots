@@ -7,7 +7,7 @@ text-color=#F2F2F2
 background-color=#47667A
 border-color=#222222
 
-outer-margin=0,5,10,0
+outer-margin=10,5,10,5
 
 padding=8,12
 
