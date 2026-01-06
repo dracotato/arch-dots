@@ -21,7 +21,7 @@ Singleton {
     command: [ "sh", "-c", "hyprctl -j devices | jq -j '.[][] | select(.main == true) | .active_keymap'" ]
     stdout: StdioCollector {
       onStreamFinished: {
-        setLayout(this.text);
+        setLayout(text);
       }
     }
   }

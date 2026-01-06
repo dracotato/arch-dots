@@ -1,11 +1,12 @@
 import QtQuick
 
+import qs.services
 
 Row {
   property string textContent: "null"
-  property string textColor: "#eee"
-  property real fontSize: 16
-  property real fontWeight: 500
+  property string textColor: UI.clrFg
+  property real fontSize: UI.txtSize
+  property real fontWeight: UI.txtWeight
 
   property string icon: ""
   property string iconColor: textColor
@@ -21,7 +22,6 @@ Row {
     anchors.verticalCenter: parent.verticalCenter
 
     text: icon
-
   }
 
   Text {

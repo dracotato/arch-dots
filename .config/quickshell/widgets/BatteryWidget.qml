@@ -33,11 +33,7 @@ IconText {
       icon = Battery.isCharging ? '󰢟' : '󰂎'
     }
 
-    if (Battery.percentage < 25) {
-      iconColor = "#f22"
-    } else {
-      iconColor = textColor
-    }
+    iconColor = Battery.danger ? UI.clrDanger : textColor
   }
 
   Connections {

@@ -20,8 +20,8 @@ Singleton {
 
     stdout: StdioCollector {
       onStreamFinished: {
-        root.status = this.text ? this.text.split(":")[0] : ""
-        root.name = this.text ? this.text.split(":")[1] : ""
+        root.status = text ? text.split(":")[0] : ""
+        root.name = text ? text.split(":")[1] : ""
       }
     }
   }
@@ -31,7 +31,7 @@ Singleton {
     running: true
     command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*' | awk -F ':' '{print $2}'" ]
     stdout: StdioCollector {
-      onStreamFinished: root.strength = this.text
+      onStreamFinished: root.strength = text
     }
   }
 

@@ -3,6 +3,8 @@ import Quickshell.Wayland
 import QtQuick
 
 import qs.widgets
+import qs.services
+import qs.components
 
 Scope {
   Variants {
@@ -13,16 +15,7 @@ Scope {
       screen: modelData
       WlrLayershell.layer: WlrLayer.Top
 
-      property real outerMargin: 8 // screen gap
-      property real sectionGap: 32
-      property real componentGap: 12
-
-      property string bgcolor: "#111"
-      property string textcolor: "#eee"
-
-      implicitHeight: 48
-
-      color: "transparent"
+      implicitHeight: UI.barHeight
 
       anchors {
         top: true
@@ -33,7 +26,7 @@ Scope {
       Rectangle {
         anchors.fill: parent
 
-        color: bgcolor
+        color: UI.clrBg
 
         Row {
           id: leftSection
@@ -42,19 +35,15 @@ Scope {
           anchors.right: clock.left
           anchors.bottom: parent.bottom
           anchors.left: parent.left
-          anchors.rightMargin: sectionGap // gap between clock
-          anchors.leftMargin: outerMargin // gap between screen
+          anchors.rightMargin: UI.barSectionGap
+          anchors.leftMargin: UI.barPadding
 
-          spacing: componentGap
+          spacing: UI.barComponentGap
 
           HyprWorkspaces {
             id: workspaces
 
             anchors.verticalCenter: parent.verticalCenter
-
-            textColor: textcolor
-            fontWeight: 500
-            fontSize: 16
           }
         }
 
@@ -62,10 +51,6 @@ Scope {
           id: clock
 
           anchors.centerIn: parent
-
-          textColor: textcolor
-          fontWeight: 500
-          fontSize: 16
         }
 
         Row {
@@ -75,41 +60,31 @@ Scope {
           anchors.right: parent.right
           anchors.bottom: parent.bottom
           anchors.left: clock.right
-          anchors.leftMargin: sectionGap // gap between clock
-          anchors.rightMargin: outerMargin // gap between screen
+          anchors.leftMargin: UI.barSectionGap // gap between clock
+          anchors.rightMargin: UI.barPadding // gap between screen
 
-          spacing: componentGap
+          spacing: UI.barComponentGap
           layoutDirection: Qt.RightToLeft
 
 
           BatteryWidget {
-            id: battery
-
             anchors.verticalCenter: parent.verticalCenter
-
-            textColor: textcolor
-            fontWeight: 500
-            fontSize: 16
           }
 
           NetworkWidget {
-            id: network
-
             anchors.verticalCenter: parent.verticalCenter
-
-            textColor: textcolor
-            fontWeight: 500
-            fontSize: 16
           }
 
           LayoutWidget {
-            id: layout
-
             anchors.verticalCenter: parent.verticalCenter
+          }
 
-            textColor: textcolor
-            fontWeight: 500
-            fontSize: 16
+          BrightnessWidget {
+            anchors.verticalCenter: parent.verticalCenter
+          }
+
+          VolumeWidget {
+            anchors.verticalCenter: parent.verticalCenter
           }
         }
       }

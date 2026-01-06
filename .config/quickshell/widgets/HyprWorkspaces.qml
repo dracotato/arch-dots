@@ -2,11 +2,12 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
+import qs.services
 
 ListView {
-  property string textColor: "#eee"
-  property real fontSize: 16
-  property real fontWeight: 500
+  property string textColor: UI.clrFg
+  property real fontSize: UI.txtSize
+  property real fontWeight: UI.txtWeight
 
   width: 180
   height: 32
@@ -20,7 +21,7 @@ ListView {
       required property real focused
       required property string name
 
-      color: focused ? "#66e" : "transparent"
+      color: focused ? UI.clrPrimary : "transparent"
 
       implicitWidth: text.implicitWidth + 12
       anchors.top: parent.top
