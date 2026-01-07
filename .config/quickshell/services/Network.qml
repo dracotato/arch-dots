@@ -29,9 +29,9 @@ Singleton {
   Process {
     id: sigProc
     running: true
-    command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*' | awk -F ':' '{print $2}'" ]
+    command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*'" ]
     stdout: StdioCollector {
-      onStreamFinished: root.strength = text
+      onStreamFinished: root.strength = text.split(":")[1]
     }
   }
 

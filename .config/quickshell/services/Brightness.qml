@@ -14,9 +14,13 @@ Singleton {
   Process {
     id: initProc
     running: true
-    command: [ "sh", "-c", "brightnessctl -m | awk -F, '{ print $4 }'" ]
+    command: [ "sh", "-c", "brightnessctl -m" ]
     stdout: StdioCollector {
-      onStreamFinished: root.percentage = text.substring(0, text.length-2)
+      onStreamFinished: {
+        let readPercentage = text.split(",")[3]
+        readPercentage = readPercentage.substring(0, readPercentage.length-1) // remove the "%"
+        root.percentage = readPercentage
+      }
     }
   }
 

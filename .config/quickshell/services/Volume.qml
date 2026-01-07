@@ -16,9 +16,9 @@ Singleton {
   Process {
     id: initProc
     running: true
-    command: [ "sh", "-c", "wpctl get-volume @DEFAULT_SINK@ | awk -F' ' '{ print $2 }'" ]
+    command: [ "sh", "-c", "wpctl get-volume @DEFAULT_SINK@" ]
     stdout: StdioCollector {
-      onStreamFinished: root.rawPercentage = text
+      onStreamFinished: root.rawPercentage = text.split(" ")[1]
     }
   }
 
