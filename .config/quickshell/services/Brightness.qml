@@ -8,7 +8,6 @@ import Quickshell.Hyprland
 Singleton {
   id: root
 
-  property real rawPercentage: percentage/100
   property int percentage
 
   Process {

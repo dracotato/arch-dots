@@ -40,7 +40,6 @@ ListView {
       MouseArea {
         anchors.fill: parent
         onClicked: { 
-          console.log(name)
           if (id >= 0) {
             Hyprland.dispatch(`workspace ${name}`)
           } else {

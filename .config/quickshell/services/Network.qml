@@ -22,6 +22,8 @@ Singleton {
       onStreamFinished: {
         root.status = text ? text.split(":")[0] : ""
         root.name = text ? text.split(":")[1] : ""
+        const len = root.name.length
+        root.name = len > 7 ? root.name.substring(0, 5) + "…" : root.name
       }
     }
   }
