@@ -7,15 +7,19 @@ import qs.services
 import qs.components
 
 Scope {
+  property bool show
   Variants {
     model: Quickshell.screens
 
     PanelWindow {
+      id: panel
+
       required property var modelData
       screen: modelData
       WlrLayershell.layer: WlrLayer.Top
 
       implicitHeight: UI.barHeight
+      visible: show
 
       anchors {
         top: true
@@ -71,20 +75,48 @@ Scope {
             anchors.verticalCenter: parent.verticalCenter
           }
 
-          NetworkWidget {
+          Hoverable {
             anchors.verticalCenter: parent.verticalCenter
+            parentWindow: panel
+            popoutX: rightSection.x + this.x + this.width / 2
+            popoutContent: Network.name
+
+            implicitWidth: net.implicitWidth
+            implicitHeight: net.implicitHeight
+
+            NetworkWidget {
+              id: net
+
+              anchors.verticalCenter: parent.verticalCenter
+            }
           }
 
           LayoutWidget {
             anchors.verticalCenter: parent.verticalCenter
           }
 
-          BrightnessWidget {
+          Hoverable {
             anchors.verticalCenter: parent.verticalCenter
+            parentWindow: panel
+            popoutX: rightSection.x + this.x + this.width / 2
+            popoutContent: Brightness.percentage + "%"
+
+            implicitWidth: child.implicitWidth
+            implicitHeight: child.implicitHeight
+
+            BrightnessWidget {
+              id: child
+
+              anchors.verticalCenter: parent.verticalCenter
+            }
           }
 
           VolumeWidget {
+            id: volumeWidget
+
             anchors.verticalCenter: parent.verticalCenter
+            parentWindow: panel
+            popoutX: rightSection.x + this.x + this.width / 2
           }
         }
       }

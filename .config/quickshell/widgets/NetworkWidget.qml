@@ -5,7 +5,8 @@ import qs.components
 
 
 IconText {
-  textContent: Network.name ? Network.name : "N/A"
+
+  textContent: Network.name ? (Network.name.length > 7 ? Network.name.substring(0, 5) + "…" : Network.name) : "N/A"
   icon: updateIcon(Network.status, Network.strength)
 
   function updateIcon(status, strength) {

@@ -2,40 +2,28 @@ import QtQuick
 
 import Quickshell
 
-import qs.components
 import qs.services
 
-CircularIndicator {
+Item {
   id: root
 
   required property var parentWindow
-  property real popoutX
+  required property real popoutX
+  required property string popoutContent
+
+  property real popoutWidth: 300
+  property real popoutHeight: 50
 
   property bool cursorInside: false
   property bool hover: false
-
-  progress: Volume.muted ? 0 : Volume.rawPercentage
-  textContent: {
-    if (Volume.rawPercentage <= 0 || Volume.muted) {
-      return "󰝟";
-    } else if (Volume.rawPercentage > 1) {
-      return "󱄡";
-    } else if (Volume.rawPercentage > .06) {
-      return "󰕾";
-    } else if (Volume.rawPercentage > .01) {
-      return "󰖀";
-    } else {
-      return "󰕿";
-    }
-  }
+  property real angleDelta
 
   MouseArea {
     anchors.fill: parent
     hoverEnabled: true
 
     onWheel: (scroll) => {
-      let delta = scroll.angleDelta.y/500
-      Volume.setVolume(Volume.rawPercentage+delta)
+      root.angleDelta = scroll.angleDelta
     }
     onEntered: {
       hoverDelay.running = true
@@ -71,8 +59,6 @@ CircularIndicator {
     implicitHeight: text.implicitHeight + 16
 
     Rectangle {
-      id: rect
-
       color: UI.clrBg
       anchors.fill: parent
 
@@ -82,7 +68,7 @@ CircularIndicator {
       Text {
         id: text
 
-        text: `${Math.round(Volume.rawPercentage*100)}%`
+        text: popoutContent
         color: UI.clrFg
         anchors.centerIn: parent
       }

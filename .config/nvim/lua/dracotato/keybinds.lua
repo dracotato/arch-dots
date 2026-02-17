@@ -24,6 +24,7 @@ wk.add({
   { "<leader>fk", builtin.keymaps, desc = "Telescope Find Keymap" },
   { "<leader>fh", builtin.help_tags, desc = "Telescope Find Help" },
   { "<leader>fc", builtin.colorscheme, desc = "Telescope Find Colorscheme" },
+  { "<leader>ft", ":TodoTelescope<CR>", desc = "Telescope Find Todos" },
   -- Code
   { "<leader>c", group = "Code" },
   { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Actions" },
@@ -36,7 +37,21 @@ wk.add({
   { "<leader>bp", ":bprevious<CR>", desc = "Buffer Previous" },
   { "<leader>bd", ":bd<CR>", desc = "Buffer Delete" },
   -- delete all buffers before and after this one
-  { "<leader>bo", ":1,.-bd|.+,$bd<CR>", desc = "Buffer Close others" },
+  {
+    "<leader>bo",
+    function()
+      local current_buf = vim.api.nvim_get_current_buf()
+      vim
+        .iter(vim.api.nvim_list_bufs())
+        :filter(function(buf)
+          return vim.api.nvim_buf_is_loaded(buf) and buf ~= current_buf
+        end)
+        :each(function(buf)
+          vim.api.nvim_buf_delete(buf, {})
+        end)
+    end,
+    desc = "Buffer Close others",
+  },
   { "<S-l>", ":bnext<CR>", desc = "Buffer Next" },
   { "<S-h>", ":bprevious<CR>", desc = "Buffer Previous" },
   { "]b", ":bnext<CR>", desc = "Buffer Next" },
