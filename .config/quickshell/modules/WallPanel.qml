@@ -8,7 +8,7 @@ PanelWindow {
 
   property bool show
 
-  readonly property string wallPath: `${Quickshell.env("HOME")}/pics/wallpapers`
+  readonly property string wallPath: `${Quickshell.env("HOME")}/.walls`
   property string currentWall
   property var files: []
   property real panelHeight: 100
