@@ -91,7 +91,7 @@ Scope {
             }
           }
 
-          LayoutWidget {
+          KbLayoutWidget {
             anchors.verticalCenter: parent.verticalCenter
           }
 

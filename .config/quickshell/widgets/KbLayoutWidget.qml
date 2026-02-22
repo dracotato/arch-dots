@@ -6,6 +6,6 @@ import qs.services
 
 
 IconText {
-  textContent: Layout.layoutAbbr
+  textContent: KbLayout.layoutAbbr
   icon: ""
 }
