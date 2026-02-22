@@ -49,6 +49,12 @@ Scope {
 
             anchors.verticalCenter: parent.verticalCenter
           }
+
+          MprisWidget {
+            id: mpris
+
+            anchors.verticalCenter: parent.verticalCenter
+          }
         }
 
         ClockWidget {
