@@ -10,7 +10,8 @@ wk.add({
   { "<ESC>", ":nohl<CR>" },
   { "<Esc><Esc>", "<C-\\><C-n>", mode = "t", desc = "Exit terminal mode" },
   -- Misc
-  { "<leader>e", oil.toggle_float, desc = "Open Oil" },
+  { "<leader>e", oil.toggle_float, desc = "Toggle Oil" },
+  { "<leader>r", ":Neotree toggle<CR>", desc = "Toggle Neo-Tree" },
   { "<leader>l", ":Lazy<CR>", desc = "Lazy" },
   { "<leader>qq", ":qa!<CR>", desc = "Quit All (force)" },
   { "<leader>qu", ":suspend<CR>", desc = "Suspend Session" },
@@ -61,7 +62,7 @@ wk.add({
   { "<leader>tt", ":terminal<CR>a", desc = "Open Terminal New Buffer" },
   -- Git
   { "<leader>g", group = "Git" },
-  { "<leader>gs", builtin.git_status, desc = "Git Status" },
+  { "<leader>gs", ":Neotree float git_status<CR>", desc = "Git Status" },
   { "<leader>gS", builtin.git_stash, desc = "Git Stash" },
   { "<leader>gc", builtin.git_commits, desc = "Git Commits" },
   { "<leader>gl", gitsigns.blame_line, desc = "Git Blame line" },
