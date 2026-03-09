@@ -1,9 +1,9 @@
-prompt = search
+prompt=Search Apps
 allow_images=true
 hide_scroll=true
 
 insensitive=true
-matching=contains
+matching=multi-contains
 
 term=kitty
 
