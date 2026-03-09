@@ -1,7 +1,6 @@
 require("dracotato.options")
 require("dracotato.lazy")
 require("dracotato.keybinds")
-require("dracotato.lsp")
 require("dracotato.autocmds")
 
 vim.cmd.colorscheme("catppuccin")
