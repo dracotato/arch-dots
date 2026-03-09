@@ -15,6 +15,7 @@ Singleton {
   }
 
   property real rawPercentage: defaultSink?.audio.volume
+  property real percentage: Math.floor(rawPercentage*100)
 
   property bool muted: defaultSink?.audio.muted
 

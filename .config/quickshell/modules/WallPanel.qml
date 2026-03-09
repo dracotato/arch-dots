@@ -3,10 +3,10 @@ import Quickshell.Io
 import Quickshell.Wayland
 import QtQuick
 
+import qs.services
+
 PanelWindow {
   id: root
-
-  property bool show
 
   readonly property string wallPath: `${Quickshell.env("HOME")}/.walls`
   property string currentWall
@@ -14,7 +14,15 @@ PanelWindow {
   property real panelHeight: 100
 
   implicitHeight: panelHeight
-  visible: show
+  visible: AppState.wallPanelVisible
+
+  onVisibleChanged: () => {
+    if (visible) {
+      lsProc.running = true
+    }
+  }
+
+  focusable: true
 
   WlrLayershell.layer: WlrLayer.Top
   anchors {
@@ -26,7 +34,6 @@ PanelWindow {
   Process {
     id: lsProc
     command: ["bash", "-c", `ls ${wallPath}`]
-    running: true
     stdout: StdioCollector {
       onStreamFinished: {
         files = text.trim().split("\n")
@@ -45,9 +52,19 @@ PanelWindow {
     setProc.running = true
   }
 
+  Item {
+    focus: AppState.wallPanelVisible
+    Keys.onPressed: (event) => {
+      if (event.key == Qt.Key_Escape && AppState.wallPanelVisible) {
+        event.accepted = true;
+        AppState.wallPanelVisible = false;
+      }
+    }
+  }
+
   Rectangle {
     anchors.fill: parent
-    color: "black"
+    color: UI.clrBg
 
     Component {
       id: listDelegate

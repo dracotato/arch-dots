@@ -22,7 +22,7 @@ Singleton {
       onStreamFinished: {
         root.status = text ? text.split(":")[0] : ""
         root.name = text ? text.split(":")[1] : ""
-        const len = root.name.length
+        root.name = root.name.trim()
       }
     }
   }
@@ -32,7 +32,7 @@ Singleton {
     running: true
     command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*'" ]
     stdout: StdioCollector {
-      onStreamFinished: root.strength = text.split(":")[1]
+      onStreamFinished: root.strength = text.split(":")[1] | 0
     }
   }
 

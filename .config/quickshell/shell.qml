@@ -1,20 +1,24 @@
+//@ pragma IconTheme Adwaita
+//@ pragma UseQApplication
+
 import Quickshell
 import Quickshell.Io
 import QtQuick
 import QtQuick.Controls
 
 import qs.modules
+import qs.services
 
 ShellRoot {
-  property bool barVisible: true
-  property bool wallPanelVisible: false
-
-
   IpcHandler {
     target: "bar"
 
     function toggle() {
-      barVisible = !barVisible
+      AppState.barVisible = !AppState.barVisible
+    }
+
+    function togglePopup() {
+      AppState.barPopupVisible = !AppState.barPopupVisible
     }
   }
 
@@ -22,15 +26,11 @@ ShellRoot {
     target: "wallPanel"
 
     function toggle() {
-      wallPanelVisible = !wallPanelVisible
+      AppState.wallPanelVisible = !AppState.wallPanelVisible
     }
   }
 
-  Bar {
-    show: barVisible
-  }
+  Bar {}
 
-  WallPanel {
-    show: wallPanelVisible
-  }
+  WallPanel {}
 }

@@ -8,12 +8,6 @@ import qs.services
 CircularIndicator {
   id: root
 
-  required property var parentWindow
-  property real popoutX
-
-  property bool cursorInside: false
-  property bool hover: false
-
   progress: Volume.muted ? 0 : Volume.rawPercentage
   textContent: {
     if (Volume.rawPercentage <= 0 || Volume.muted) {
@@ -31,61 +25,10 @@ CircularIndicator {
 
   MouseArea {
     anchors.fill: parent
-    hoverEnabled: true
 
     onWheel: (scroll) => {
-      let delta = scroll.angleDelta.y/500
+      let delta = scroll.angleDelta.y/2400
       Volume.setVolume(Volume.rawPercentage+delta)
-    }
-    onEntered: {
-      hoverDelay.running = true
-      cursorInside = true
-    }
-    onExited: {
-      cursorInside = false
-      hover = false
-    }
-  }
-
-  Timer {
-    id: hoverDelay
-
-    interval: 300
-    onTriggered: {
-      if (cursorInside) {
-        hover = true
-      }
-    }
-  }
-
-  PopupWindow {
-    anchor.window: root.parentWindow
-    anchor.rect.x: root.popoutX - this.width / 2
-    anchor.rect.y: root.parentWindow.height
-
-    visible: root.hover
-
-    color: "transparent"
-
-    implicitWidth: text.implicitWidth + 16
-    implicitHeight: text.implicitHeight + 16
-
-    Rectangle {
-      id: rect
-
-      color: UI.clrBg
-      anchors.fill: parent
-
-      bottomLeftRadius: 8
-      bottomRightRadius: 8
-
-      Text {
-        id: text
-
-        text: `${Math.round(Volume.rawPercentage*100)}%`
-        color: UI.clrFg
-        anchors.centerIn: parent
-      }
     }
   }
 }

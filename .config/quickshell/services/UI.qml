@@ -8,7 +8,7 @@ Singleton {
 
   readonly property real barHeight: 48
 
-  readonly property real barPadding: 12
+  readonly property real barPadding: 8
   readonly property real barComponentGap: 12
   readonly property real barSectionGap: 16
 

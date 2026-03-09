@@ -25,6 +25,7 @@ Singleton {
 
   Process {
     id: setProc
+    command: ["brightnessctl", "set", `${root.percentage}%`]
     stderr: StdioCollector {
       onStreamFinished: {
         if (text) {
@@ -36,7 +37,6 @@ Singleton {
 
   function setBrightness(value) {
     root.percentage = Math.max(0, Math.min(value, 100))
-    setProc.command = ["brightnessctl", "set", `${root.percentage}%`]
     setProc.running = true
   }
 

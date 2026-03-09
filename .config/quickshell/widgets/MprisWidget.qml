@@ -1,94 +1,83 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+
+import Quickshell
 import Quickshell.Services.Mpris
 
+import qs.components
 import qs.services
 
 Item {
   id: root
 
-  readonly property real trackMaxLength: 24
-  property list<MprisPlayer> list: Mpris.players.values
-  property MprisPlayer active: list[0]
-  property string statusIcon: active.playbackState == MprisPlaybackState.Playing ? "" : ""
+  required property MprisPlayer player
 
-  visible: active
+  property string statusIcon: player.playbackState == MprisPlaybackState.Playing ? "" : ""
 
-  implicitWidth: col.width + 20
-  implicitHeight: col.height + 4
+  width: 200
+  height: col.height
 
   function formatDuration(duration) {
     return `${Math.floor(duration/60)}:${Math.floor(duration%60).toString().padStart(2, "0")}`
   }
 
   function updateVolume(value) {
-    if (active.canControl && active.volumeSupported) {
-      active.volume = Math.max(0, Math.min(active.volume+value, 1))
+    if (player.canControl && player.volumeSupported) {
+      player.volume = Math.max(0, Math.min(player.volume+value, 1))
     } else {
       console.log("Can't update volume")
     }
   }
 
   FrameAnimation {
-    running: active.playbackState == MprisPlaybackState.Playing
-    onTriggered: active.positionChanged()
+    running: player.playbackState == MprisPlaybackState.Playing
+    onTriggered: player.positionChanged()
   }
 
   MouseArea {
     anchors.fill: parent
 
     onClicked: {
-      active.togglePlaying()
+      player.togglePlaying()
     }
 
     onWheel: (wheel) => {
-      updateVolume(wheel.angleDelta.y/500)
+      updateVolume(wheel.angleDelta.y/2400)
     }
   }
 
   Column {
     id: col
 
-    width: 200
-    spacing: 2
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-    anchors.centerIn: parent
+    spacing: 4
 
-    Row {
+    RowLayout {
       spacing: 8
 
       anchors.left: parent.left
-      anchors.right: parent.right
 
-      Text {
-        color: UI.clrFgLt
-        font.pixelSize: 12
-        font.weight: 500
-
-        text: `${statusIcon} ${active.identity}`
+      Image {
+        source: Quickshell.iconPath(DesktopEntries.heuristicLookup(player.identity).icon)
+        sourceSize.width: 16
+        sourceSize.height: 16
       }
 
       Text {
-        property string textColor: UI.clrFgLt
-        property real fontSize: 12
-        property real fontWeight: 500
-
         color: UI.clrFgLt
         font.pixelSize: 12
-        font.weight: 500
 
-        text: `󰕾 ${Math.floor(active.volume*100)}%`
+        text: DesktopEntries.heuristicLookup(player.identity)?.icon || `N/A (${player.identity})`
       }
 
       Text {
-        property real playerNum: Mpris.players.values.length - 1
-
         color: UI.clrFgLt
         font.pixelSize: 12
-        font.weight: 500
 
-        text: playerNum > 0 ? `+${playerNum} other player${playerNum > 1 ? "s" : ""}` : ""
+        text: `󰕾 ${Math.floor(player.volume*100)}%`
       }
     }
 
@@ -99,37 +88,34 @@ Item {
       anchors.right: parent.right
 
       Text {
-        color: UI.clrFg
         font.pixelSize: 14
-        font.weight: 500
-        clip: true
 
         Layout.fillWidth: true
+        clip: true
 
-        text: active.trackTitle || "Unknown"
+        text: player.trackTitle || "Unknown"
       }
 
       Text {
         color: UI.clrFgLt
         font.pixelSize: 14
-        font.weight: 500
 
-        text: `${formatDuration(active.position)} — ${formatDuration(active.length)}`
+        text: `${formatDuration(player.position)} — ${formatDuration(player.length)}`
       }
     }
 
     ProgressBar {
       id: progressBar
 
-      to: active.length
-      value: active.position
-      indeterminate: active.trackTitle ? false : true
+      to: player.length
+      value: player.position
+      indeterminate: player.trackTitle ? false : true
 
       anchors.left: parent.left
       anchors.right: parent.right
 
       background: Rectangle {
-        implicitHeight: 2
+        implicitHeight: 4
         color: UI.clrBgLt
         radius: 4
       }
