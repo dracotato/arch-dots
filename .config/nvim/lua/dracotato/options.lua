@@ -43,6 +43,8 @@ vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
 
+vim.o.winborder = "rounded"
+
 vim.o.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
@@ -62,7 +64,6 @@ vim.o.confirm = true
 
 vim.diagnostic.config({
   severity_sort = true,
-  float = { border = "rounded", source = "if_many" },
   underline = { severity = vim.diagnostic.severity.ERROR },
   signs = {
     text = {

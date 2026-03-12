@@ -49,9 +49,10 @@ wk.add({
   { "<leader>bn", ":bnext<CR>", desc = "Buffer Next" },
   { "<leader>bp", ":bprevious<CR>", desc = "Buffer Previous" },
   { "<leader>bd", ":bd<CR>", desc = "Buffer Delete" },
+  { "<leader>bo", ":buf #<CR>", desc = "Buffer Go to Other" },
   -- delete all buffers before and after this one
   {
-    "<leader>bo",
+    "<leader>bO",
     function()
       local current_buf = vim.api.nvim_get_current_buf()
       vim
