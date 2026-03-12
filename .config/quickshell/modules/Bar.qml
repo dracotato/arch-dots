@@ -20,12 +20,23 @@ Scope {
 
       required property var modelData
 
+      property real screenMargins: AppState.barFloat ? 8 : 0
+      property real hPadding: AppState.barFloat ? UI.barHeight/2 : UI.barPadding
+      property real borderRadius: AppState.barFloat ? UI.barHeight : 0
+
       screen: modelData
       WlrLayershell.layer: WlrLayer.Top
 
       implicitHeight: UI.barHeight
 
+      color: "transparent"
       visible: AppState.barVisible
+
+      margins {
+        top: screenMargins
+        left: screenMargins
+        right: screenMargins
+      }
 
       anchors {
         top: true
@@ -33,16 +44,20 @@ Scope {
         right: true
       }
 
+
       Rectangle {
         id: rootRect
 
         anchors.fill: parent
 
         color: UI.clrBg
+        radius: panel.borderRadius
 
         RowLayout {
           anchors.fill: parent
           anchors.margins: UI.barPadding
+          anchors.leftMargin: panel.hPadding
+          anchors.rightMargin: panel.hPadding
 
           spacing: UI.barSectionGap
 
@@ -74,17 +89,39 @@ Scope {
               AppState.barPopupVisible = !AppState.barPopupVisible
             }
 
-            Text {
+            Column {
               id: clock
 
-              text: Time.time
               anchors.centerIn: parent
+
+              spacing: -2
+
+              Text {
+                text: Time.time
+                font.weight: 700
+                anchors.horizontalCenter: parent.horizontalCenter
+              }
+
+              Text {
+                text: Time.date
+                color: UI.clrFgLt
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.pixelSize: 12
+              }
             }
           }
 
           Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            RowLayout {
+              anchors.left: parent.left
+              anchors.verticalCenter: parent.verticalCenter
+              spacing: UI.barComponentGap
+
+              CaffeineWidget {}
+            }
 
             RowLayout {
               anchors.top: parent.top
@@ -190,11 +227,11 @@ Scope {
                     onClicked: (event) => {
                       switch (event.button) {
                         case Qt.LeftButton:
-                          modelData.activate()
-                          break
+                        modelData.activate()
+                        break
                         case Qt.RightButton:
-                          modelData.display(popupWindow, event.x+48, event.y+48)
-                          break
+                        modelData.display(popupWindow, event.x+48, event.y+48)
+                        break
                       }
                     }
                   }

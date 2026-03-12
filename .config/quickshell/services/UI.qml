@@ -10,7 +10,7 @@ Singleton {
 
   readonly property real barPadding: 8
   readonly property real barComponentGap: 12
-  readonly property real barSectionGap: 16
+  readonly property real barSectionGap: 48
 
   readonly property string clrBg: "#13181e"
   readonly property string clrBgLt: "#445"

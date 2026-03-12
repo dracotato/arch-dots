@@ -20,6 +20,10 @@ ShellRoot {
     function togglePopup() {
       AppState.barPopupVisible = !AppState.barPopupVisible
     }
+
+    function toggleFloat() {
+      AppState.barFloat = !AppState.barFloat
+    }
   }
 
   IpcHandler {

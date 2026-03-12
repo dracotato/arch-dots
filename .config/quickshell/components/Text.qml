@@ -5,6 +5,6 @@ import qs.services
 
 Text {
   color: UI.clrFg
-  font.pixelSize: 16
-  font.weight: 500
+  font.pixelSize: UI.txtSize
+  font.weight: UI.txtWeight
 }
