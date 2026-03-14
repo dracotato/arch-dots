@@ -1,7 +1,8 @@
+import QtQuick
+
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import QtQuick
 
 import qs.services
 
@@ -89,6 +90,14 @@ PanelWindow {
       orientation: Qt.Horizontal
       model: files
       delegate: listDelegate
+    }
+  }
+
+  IpcHandler {
+    target: "wallPanel"
+
+    function toggle() {
+      AppState.wallPanelVisible = !AppState.wallPanelVisible
     }
   }
 }

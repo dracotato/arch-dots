@@ -1,5 +1,6 @@
-import Quickshell
 import QtQuick
+
+import Quickshell
 import QtQuick.Shapes
 
 import qs.services

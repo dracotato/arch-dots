@@ -1,13 +1,13 @@
-import Quickshell
-import Quickshell.Wayland
-import Quickshell.Hyprland
-import Quickshell.Services.Mpris
-import Quickshell.Services.SystemTray
-
 import QtQuick
 import QtQuick.Layouts
 
-import qs.widgets
+import Quickshell
+import Quickshell.Hyprland
+import Quickshell.Io
+import Quickshell.Services.Mpris
+import Quickshell.Services.SystemTray
+import Quickshell.Wayland
+
 import qs.services
 import qs.components
 
@@ -97,13 +97,13 @@ Scope {
               spacing: -2
 
               Text {
-                text: Time.time
+                text: Time.format("h:mm:ss AP")
                 font.weight: 700
                 anchors.horizontalCenter: parent.horizontalCenter
               }
 
               Text {
-                text: Time.date
+                text: Time.format(`dddd, MMM M'${Time.monthDaySuffix}'`)
                 color: UI.clrFgLt
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 12
@@ -227,10 +227,10 @@ Scope {
                     onClicked: (event) => {
                       switch (event.button) {
                         case Qt.LeftButton:
-                        modelData.activate()
+                          modelData.activate()
                         break
-                        case Qt.RightButton:
-                        modelData.display(popupWindow, event.x+48, event.y+48)
+                          case Qt.RightButton:
+                          modelData.display(popupWindow, event.x+48, event.y+48)
                         break
                       }
                     }
@@ -267,6 +267,22 @@ Scope {
               }
             }
           }
+        }
+      }
+
+      IpcHandler {
+        target: "bar"
+
+        function toggle() {
+          AppState.barVisible = !AppState.barVisible
+        }
+
+        function togglePopup() {
+          AppState.barPopupVisible = !AppState.barPopupVisible
+        }
+
+        function toggleFloat() {
+          AppState.barFloat = !AppState.barFloat
         }
       }
     }

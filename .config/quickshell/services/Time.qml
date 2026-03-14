@@ -1,19 +1,37 @@
 pragma Singleton
 
-import Quickshell
 import QtQuick
+
+import Quickshell
 
 Singleton {
   id: root
   readonly property real hours: clock.hours
   readonly property real minutes: clock.minutes
   readonly property real seconds: clock.seconds
-
-  readonly property string time: {
-    Qt.formatDateTime(clock.date, "h:mm:ss AP")
+  readonly property string monthDaySuffix: {
+    const day = format("M")
+    if (Number(day) > 3 && Number(day) < 20) {
+      return "th"
+    } else {
+      switch (day[day.length-1]) {
+        case "1":
+          return "st"
+          break;
+        case "2":
+          return "nd"
+          break;
+        case "3":
+          return "rd";
+          break;
+        default:
+        return "th"
+      }
+    }
   }
-  readonly property string date: {
-    Qt.formatDateTime(clock.date, "dddd M/d")
+
+  function format(fmt) {
+    return Qt.formatDateTime(clock.date, fmt)
   }
 
   SystemClock {
