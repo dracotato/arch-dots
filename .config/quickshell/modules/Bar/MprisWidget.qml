@@ -11,148 +11,248 @@ import qs.services
 Item {
   id: root
 
-  required property MprisPlayer player
+  property list<MprisPlayer> players: Mpris.players.values
+  property real activeIndex: 0
+  property MprisPlayer active: players[activeIndex]
+  property bool isPlaying: active?.playbackState == MprisPlaybackState.Playing
 
-  property string statusIcon: player.playbackState == MprisPlaybackState.Playing ? "" : ""
+  property string activeIdentity: active?.identity ?? "N/A"
+  property real activeVolume: (active?.volume ?? 1)*100
+  property string activeTrack: active?.trackTitle ?? "Unknown"
+  property string activeAuthor: active?.trackAuthor ?? "Unknown"
 
-  width: 200
-  height: col.height
+  width: 400
+  height: 200
 
   function formatDuration(duration) {
     return `${Math.floor(duration/60)}:${Math.floor(duration%60).toString().padStart(2, "0")}`
   }
 
   function updateVolume(value) {
-    if (player.canControl && player.volumeSupported) {
-      player.volume = Math.max(0, Math.min(player.volume+value, 1))
+    if (active?.canControl && active?.volumeSupported) {
+      active.volume = Math.max(0, Math.min(active.volume+value, 1))
+    }
+  }
+
+  function updatePlayer(dir) {
+    if (players.length <= 1) {
+      return
+    }
+
+    if (dir > 0) {
+      activeIndex = (activeIndex == players.length - 1 ? 0 : activeIndex + 1);
     } else {
-      console.log("Can't update volume")
+      activeIndex = (activeIndex == 0 ? players.length - 1 : activeIndex - 1);
     }
   }
 
   FrameAnimation {
-    running: player.playbackState == MprisPlaybackState.Playing
-    onTriggered: player.positionChanged()
+    running: isPlaying
+    onTriggered: active?.positionChanged()
   }
 
-  MouseArea {
+  Rectangle {
+    id: main
+
     anchors.fill: parent
 
-    onClicked: {
-      player.togglePlaying()
+    radius: 8
+    color: isPlaying ? UI.clrPrimary : UI.clrBgLt
+
+    Behavior on color {
+      ColorAnimation { duration: 400; easing.type: Easing.InOutQuad }
     }
-
-    onWheel: (wheel) => {
-      updateVolume(wheel.angleDelta.y/2400)
-    }
-  }
-
-  Column {
-    id: col
-
-    anchors.left: parent.left
-    anchors.right: parent.right
-
-    spacing: 4
 
     RowLayout {
+      anchors.fill: parent
+      anchors.margins: 16
       spacing: 8
 
-      anchors.left: parent.left
+      BasicButton {
+        text: "🢐"
+        txtColor: UI.clrPrimaryLt
+        hoverTxtColor: UI.clrFg
+        txtSize: UI.iconSizeBig
 
-      Image {
-        source: Quickshell.iconPath(DesktopEntries.heuristicLookup(player.identity).icon)
-        sourceSize.width: 16
-        sourceSize.height: 16
+        onClicked: updatePlayer(-1)
       }
 
-      Text {
-        color: UI.clrFgLt
-        font.pixelSize: 12
-
-        text: DesktopEntries.heuristicLookup(player.identity)?.icon || `N/A (${player.identity})`
-      }
-
-      Text {
-        color: UI.clrFgLt
-        font.pixelSize: 12
-
-        text: `󰕾 ${Math.floor(player.volume*100)}%`
-      }
-    }
-
-    RowLayout {
-      spacing: 12
-
-      anchors.left: parent.left
-      anchors.right: parent.right
-
-      Text {
-        font.pixelSize: 14
-
+      ColumnLayout {
         Layout.fillWidth: true
-        clip: true
+        Layout.fillHeight: true
 
-        text: player.trackTitle || "Unknown"
-      }
+        spacing: 8
 
-      Text {
-        color: UI.clrFgLt
-        font.pixelSize: 14
+        RowLayout {
+          Layout.fillWidth: true
 
-        text: `${formatDuration(player.position)} — ${formatDuration(player.length)}`
-      }
-    }
+          Column {
+            spacing: -2
 
-    ProgressBar {
-      id: progressBar
+            Image {
+              source: Quickshell.iconPath(DesktopEntries.heuristicLookup(active.identity)?.icon)
+              sourceSize.width: UI.iconSize
+              sourceSize.height: UI.iconSize
+            }
 
-      to: player.length
-      value: player.position
-      indeterminate: player.trackTitle ? false : true
+            Text {
+              anchors.horizontalCenter: parent.horizontalCenter
 
-      anchors.left: parent.left
-      anchors.right: parent.right
+              text: activeIdentity
+              color: UI.clrFgLt
+              font.pixelSize: UI.txtSizeSmall
+              font.weight: UI.txtWeightBold
+            }
+          }
 
-      background: Rectangle {
-        implicitHeight: 4
-        color: UI.clrBgLt
-        radius: 4
-      }
+          // empty gap
+          Item {
+            Layout.fillWidth: true
+          }
 
-      contentItem: Item {
-        implicitHeight: 1
 
-        Rectangle {
-          width: progressBar.visualPosition * parent.width
-          height: parent.height
-          radius: 4
-          color: UI.clrPrimary
-          visible: !progressBar.indinate
-        }
+          MouseArea {
+            width: col.width
+            height: col.height
 
-        Item {
-          anchors.fill: parent
-          visible: progressBar.indeterminate
-          clip: true
+            onClicked: {
+              active?.togglePlaying()
+            }
 
-          Rectangle {
-            id: indRect
+            onWheel: (wheel) => {
+              updateVolume(wheel.angleDelta.y/2400)
+            }
 
-            property real animDuration: 5000
+            Column {
+              id: col
 
-            color: UI.clrPrimary
-            width: 20
-            height: progressBar.height
+              // necessary to prevent layout shifts when percentage goes from 100 to 99
+              width: 30
 
-            SequentialAnimation on x {
-              running: true
-              loops: Animation.Infinite
-              NumberAnimation { to: progressBar.width - indRect.width; duration: indRect.animDuration/2; easing.type: Easing.InOutQuad }
-              NumberAnimation { to: 0; duration: indRect.animDuration/2; easing.type: Easing.InOutQuad }
+              spacing: -4
+
+              Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                text: "󰕾"
+                color: UI.clrFgLt
+                font.pixelSize: UI.iconSizeBig
+              }
+
+              Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                text: Math.floor(activeVolume) + "%"
+                font.pixelSize: UI.txtSizeSmall
+                color: UI.clrFgLt
+                font.weight: UI.txtWeightBold
+              }
             }
           }
         }
+
+        Column {
+          Layout.fillWidth: true
+          Layout.fillHeight: true
+
+          spacing: 2
+          clip: true
+
+          Text {
+            text: activeTrack
+            font.weight: 700
+          }
+
+          Text {
+            text: `By: ${activeAuthor}`
+            color: UI.clrFgLt
+            font.pixelSize: UI.txtSizeSmall
+          }
+        }
+
+        Column {
+          Layout.fillWidth: true
+          Layout.alignment: Qt.AlignHCenter
+
+          spacing: 12
+
+          ProgressBar {
+            id: progressBar
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            to: active?.length ?? 1
+            value: active?.position ?? 0
+
+            background: Rectangle {
+              implicitHeight: 4
+              color: UI.clrBg
+              radius: 4
+            }
+
+            contentItem: Item {
+              Rectangle {
+                width: progressBar.visualPosition * parent.width
+                height: parent.height
+                radius: 4
+                color: UI.clrPrimaryLt
+              }
+            }
+          }
+
+          Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 16
+
+            BasicButton {
+              text: "󰒮"
+              txtColor: UI.clrPrimaryLt
+              hoverTxtColor: UI.clrFg
+              txtSize: UI.iconSizeBig
+
+              onClicked: {
+                if (active?.canGoPrevious) {
+                  active?.previous()
+                }
+              }
+            }
+
+            BasicButton {
+              text: isPlaying ? "" : ""
+              txtColor: UI.clrPrimaryLt
+              hoverTxtColor: UI.clrFg
+              txtSize: UI.iconSizeBig
+
+              onClicked: {
+                if (active?.canPause) {
+                  active?.togglePlaying()
+                }
+              }
+            }
+
+            BasicButton {
+              text: "󰒭"
+              txtColor: UI.clrPrimaryLt
+              hoverTxtColor: UI.clrFg
+              txtSize: UI.iconSizeBig
+              onClicked: {
+                if (active?.canGoNext) {
+                  active?.next()
+                }
+              }
+            }
+          }
+        }
+      }
+
+      BasicButton {
+        text: "🢒"
+        txtColor: UI.clrPrimaryLt
+        hoverTxtColor: UI.clrFg
+        txtSize: UI.iconSizeBig
+
+        onClicked: updatePlayer(1)
       }
     }
   }

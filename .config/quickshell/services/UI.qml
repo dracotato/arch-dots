@@ -27,6 +27,9 @@ Singleton {
   readonly property real txtSize: 16
   readonly property real txtSizeSmall: 12
 
+  readonly property real iconSizeBig: 24
+  readonly property real iconSize: 18
+
   readonly property real txtWeight: 500
   readonly property real txtWeightBold: 700
 }

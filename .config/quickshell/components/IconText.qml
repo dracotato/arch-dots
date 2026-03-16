@@ -10,7 +10,7 @@ Row {
 
   property string icon: ""
   property string iconColor: textColor
-  property real iconSize: 18
+  property real iconSize: UI.iconSize
 
   spacing: 4
 
