@@ -5,11 +5,10 @@ import Quickshell
 
 import qs.modules.Bar
 import qs.modules.WallPanel
-import qs.modules.Osd
-import qs.services
+import qs.modules.OsdPanel
 
 ShellRoot {
   Bar {}
   WallPanel {}
-  Osd {}
+  OsdPanel {}
 }

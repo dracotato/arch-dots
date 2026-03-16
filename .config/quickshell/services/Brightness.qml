@@ -6,6 +6,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 
+import qs.services
+
 Singleton {
   id: root
 
@@ -39,6 +41,8 @@ Singleton {
   function setBrightness(value) {
     root.percentage = Math.max(0, Math.min(value, 100))
     setProc.running = true
+
+    Osd.showOsd("󰃠", `Brightness ${percentage}%`)
   }
 
   GlobalShortcut {

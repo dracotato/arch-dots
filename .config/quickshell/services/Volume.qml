@@ -6,6 +6,8 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 
+import qs.services
+
 Singleton {
   id: root
 
@@ -20,15 +22,25 @@ Singleton {
 
   property bool muted: defaultSink?.audio.muted
 
+  property bool initialRead: false
+
   Connections {
     target: defaultSink?.audio
 
     function onVolumeChanged() {
       rawPercentage = defaultSink.audio.volume
+      // prevent showing osd on startup when volume didn't actually change,
+      // but is just read for the first time
+      if (initialRead) {
+        Osd.showOsd("󰕾", `Volume ${percentage}%`)
+      } else {
+        initialRead = true
+      }
     }
 
     function onMutedChanged() {
       muted = defaultSink.audio.muted
+      Osd.showOsd(muted ? "󰝟" : "󰕾", muted ? "Muted" : "Unmute")
     }
   }
 
