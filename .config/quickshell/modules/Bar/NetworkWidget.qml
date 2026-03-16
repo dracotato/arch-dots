@@ -6,27 +6,28 @@ import qs.components
 
 IconText {
 
-  textContent: Network.name ? (Network.name.length > 7 ? Network.name.substring(0, 5) + "…" : Network.name) : "N/A"
-  icon: updateIcon(Network.status, Network.strength)
+  textContent: Network.name ? (Network.name.length > 7 ? Network.name.substring(0, 5) + "…" : Network.name) : ""
+  icon: updateIcon()
 
-  function updateIcon(status, strength) {
-    if (status && status != "802-11-wireless") {
+  function updateIcon() {
+    if (Network.status && Network.status != "802-11-wireless") {
       icon = ""
       return
     }
 
-    if (!strength) {
+    // not connected
+    if (!Network.name) {
       icon = "󰤮"
       return
     }
 
-    if (strength >= 80) {
+    if (Network.strength >= 80) {
       icon = "󰤨"
-    } else if (strength >= 60) {
+    } else if (Network.strength >= 60) {
       icon = "󰤥"
-    } else if (strength >= 40) {
+    } else if (Network.strength >= 40) {
       icon = "󰤢"
-    } else if (strength >= 20) {
+    } else if (Network.strength >= 20) {
       icon = "󰤟"
     } else {
       icon = "󰤯"
@@ -36,8 +37,7 @@ IconText {
   Connections {
     target: Network
     function onStrengthChanged() {
-      updateIcon(Network.status, Network.strength)
+      updateIcon()
     }
   }
-
 }
