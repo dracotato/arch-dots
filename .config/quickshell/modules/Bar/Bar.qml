@@ -100,7 +100,7 @@ Scope {
               }
 
               Text {
-                text: Time.format(`dddd, MMM M'${Time.monthDaySuffix}'`)
+                text: Time.format(`dddd, MMM dd'${Time.monthDaySuffix}'`)
                 color: UI.clrFgLt
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 12
