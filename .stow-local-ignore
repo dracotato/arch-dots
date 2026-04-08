@@ -2,8 +2,9 @@
 /.gitignore
 /.gitconfig
 
-^/*.md
+^/.*.md
 ^/README.*
 ^/LICENSE.*
+^/dots-.*
 
 ^/scripts

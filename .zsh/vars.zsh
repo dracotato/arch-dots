@@ -1,4 +1,4 @@
-PATH="$PATH:$HOME/.dots/scripts/"
+PATH="$PATH:$HOME/.local/bin/"
 
 export MANPAGER='nvim +Man!'
 

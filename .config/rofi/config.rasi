@@ -1,0 +1,18 @@
+configuration {
+  modes: "combi";
+  combi-modes: "window,drun";
+  sidebar-mode: true;
+  show-icons: true;
+  terminal: "kitty";
+  display-combi: "Apps+";
+  display-window: "Windows";
+  display-run: "Commands";
+  display-ssh: "SSH";
+  display-drun: "Apps";
+  kb-mode-next: "L,Shift+Right,Control+Tab";
+  kb-mode-previous: "H,Shift+Left,Control+ISO_Left_Tab";
+  kb-element-next: "J,Tab";
+  kb-element-prev: "K,ISO_Left_Tab";
+}
+
+@theme "/usr/share/rofi/themes/Arc-Dark.rasi"
