@@ -14,4 +14,6 @@ Singleton {
   property bool wallPanelVisible: false
 
   property bool settingsVisible: false
+
+  property bool enableFocusUtil: true
 }

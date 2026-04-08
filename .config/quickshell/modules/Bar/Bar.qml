@@ -134,6 +134,10 @@ Scope {
               VolumeWidget {
                 id: volumeWidget
               }
+
+              FocusWidget {
+                id: focusWidget
+              }
             }
           }
         }
