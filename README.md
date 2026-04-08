@@ -8,18 +8,19 @@
 
 - Terminal: **kitty**
 - Bar: **quickshell**
-- Notification Daemon: **mako**
-- App Launcher: **wofi**
+- Notification Daemon: **quickshell**
+- App Launcher: **rofi**
 - Screen Lock: **hyprlock**
 - Idle Daemon: **hypridle**
 - Screenshot Utility: **hyprshot**
 - Color Picker Utility: **hyprpicker**
 - Wallpaper Utility: **hyprpaper**
-- Wallpaper Manager: **waypaper**
+- Wallpaper Manager: **quickshell**
 
 ## Installation
 
 ```bash
+cd ~ # make sure you're in the home directory
 git clone git@github.com:dracotato/arch-dots.git .dots
 cd .dots
 # with stow
