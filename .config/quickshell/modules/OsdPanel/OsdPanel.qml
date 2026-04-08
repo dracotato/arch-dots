@@ -74,7 +74,7 @@ Scope {
         radius: height / 2
         color: UI.clrBg
         border {
-          color: UI.clrPrimary
+          color: UI.clrBgLt
           width: 2
         }
 

@@ -16,9 +16,9 @@ Item {
   property MprisPlayer active: players[activeIndex]
   property bool isPlaying: active?.playbackState == MprisPlaybackState.Playing
 
-  property string activeIdentity: active?.identity ?? "N/A"
+  property string activeIdentity: active?.identity ?? ""
   property real activeVolume: (active?.volume ?? 1)*100
-  property string activeTrack: active?.trackTitle ?? "Unknown"
+  property string activeTrack: active?.trackTitle ?? "Nothing is playing"
   property string activeAuthor: active?.trackAuthor ?? "Unknown"
 
   width: 400
@@ -90,7 +90,8 @@ Item {
             spacing: -2
 
             Image {
-              source: Quickshell.iconPath(DesktopEntries.heuristicLookup(active.identity)?.icon)
+              visible: activeIdentity
+              source: Quickshell.iconPath(DesktopEntries.heuristicLookup(activeIdentity)?.icon)
               sourceSize.width: UI.iconSize
               sourceSize.height: UI.iconSize
             }

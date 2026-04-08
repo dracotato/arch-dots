@@ -10,6 +10,32 @@ Singleton {
   property string name
   property string status
   property real strength
+  property string icon
+
+  function updateIcon() {
+    if (status && Network.status != "802-11-wireless") {
+      icon = ""
+      return
+    }
+
+    // not connected
+    if (!name) {
+      icon = "󰤮"
+      return
+    }
+
+    if (strength > 80) {
+      icon = "󰤨"
+    } else if (strength > 60) {
+      icon = "󰤥"
+    } else if (strength > 40) {
+      icon = "󰤢"
+    } else if (strength > 20) {
+      icon = "󰤟"
+    } else {
+      icon = "󰤯"
+    }
+  }
 
   Process {
     id: netProc
@@ -22,8 +48,8 @@ Singleton {
     stdout: StdioCollector {
       onStreamFinished: {
         root.status = text ? text.split(":")[0] : ""
-        root.name = text ? text.split(":")[1] : ""
-        root.name = root.name.trim()
+        root.name = text ? text.split(":")[1].trim() : ""
+        updateIcon()
       }
     }
   }
@@ -33,7 +59,9 @@ Singleton {
     running: true
     command: [ "sh", "-c", "nmcli -t -f IN-USE,SIGNAL dev wifi list | grep '^*'" ]
     stdout: StdioCollector {
-      onStreamFinished: root.strength = text.split(":")[1] | 0
+      onStreamFinished: {
+        root.strength = text.split(":")[1] | 0
+      }
     }
   }
 
