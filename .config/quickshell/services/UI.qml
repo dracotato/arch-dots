@@ -16,6 +16,8 @@ Singleton {
 
   readonly property real osdScreenPad: 48
 
+  readonly property real notifWidth: 400
+
   readonly property string clrBg: "#13181e"
   readonly property string clrBgLt: "#445"
   readonly property string clrFg: "#eef"
