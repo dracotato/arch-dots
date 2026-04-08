@@ -109,6 +109,7 @@ Scope {
               spacing: UI.barComponentGap
 
               CaffeineWidget {}
+              SettingsWidget {}
             }
 
             RowLayout {

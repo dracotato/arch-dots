@@ -89,6 +89,22 @@ PopupWindow {
           icon: ""
           textContent: Time.format(`dddd, MMMM d'${Time.monthDaySuffix}'`)
         }
+
+        Rectangle {
+          Layout.fillHeight: true
+          width: 2
+          color: UI.clrBgLt
+        }
+
+        UptimeWidget {}
+
+        Rectangle {
+          Layout.fillHeight: true
+          width: 2
+          color: UI.clrBgLt
+        }
+
+        UpdatesWidget {}
       }
 
       MprisWidget {
