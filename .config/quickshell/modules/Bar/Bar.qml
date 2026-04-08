@@ -17,12 +17,12 @@ Scope {
 
       required property var modelData
 
-      property real screenMargins: AppState.barFloat ? 8 : 0
+      property real screenMargins: AppState.barFloat ? 256 : 0
       property real hPadding: AppState.barFloat ? UI.barHeight/2 : UI.barPadding
       property real borderRadius: AppState.barFloat ? UI.barHeight : 0
 
       screen: modelData
-      WlrLayershell.layer: WlrLayer.Top
+      WlrLayershell.layer: controlCenter.visible ? WlrLayer.Overlay : WlrLayer.Bottom
 
       implicitHeight: UI.barHeight
 
@@ -30,7 +30,7 @@ Scope {
       visible: AppState.barVisible
 
       margins {
-        top: screenMargins
+        top: AppState.barFloat ? 8 : 0
         left: screenMargins
         right: screenMargins
       }
@@ -40,7 +40,6 @@ Scope {
         left: true
         right: true
       }
-
 
       Rectangle {
         id: rootRect
@@ -95,15 +94,7 @@ Scope {
 
               Text {
                 text: Time.format("h:mm:ss AP")
-                font.weight: 700
                 anchors.horizontalCenter: parent.horizontalCenter
-              }
-
-              Text {
-                text: Time.format(`dddd, MMM dd'${Time.monthDaySuffix}'`)
-                color: UI.clrFgLt
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.pixelSize: 12
               }
             }
           }
@@ -146,6 +137,8 @@ Scope {
           }
         }
         ControlCenter {
+          id: controlCenter
+
           panel: panel
           screen: modelData
         }

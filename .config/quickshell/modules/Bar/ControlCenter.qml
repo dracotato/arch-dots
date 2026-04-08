@@ -80,6 +80,17 @@ PopupWindow {
 
       spacing: 24
 
+      RowLayout {
+        Layout.fillWidth: true
+
+        spacing: 12
+
+        IconText {
+          icon: ""
+          textContent: Time.format(`dddd, MMMM d'${Time.monthDaySuffix}'`)
+        }
+      }
+
       MprisWidget {
         Layout.fillWidth: true
       }

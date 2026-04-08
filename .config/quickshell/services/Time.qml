@@ -10,7 +10,7 @@ Singleton {
   readonly property real minutes: clock.minutes
   readonly property real seconds: clock.seconds
   readonly property string monthDaySuffix: {
-    const day = format("dd")
+    const day = format("d")
     if (Number(day) > 3 && Number(day) < 20) {
       return "th"
     } else {
