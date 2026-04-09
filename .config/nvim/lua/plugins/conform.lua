@@ -22,7 +22,7 @@ return {
       css = { "prettier" },
       javascript = { "prettier" },
       htmldjango = { "djlint" },
-      bash = { "shfmt" },
+      sh = { "shfmt" },
     },
   },
 }
