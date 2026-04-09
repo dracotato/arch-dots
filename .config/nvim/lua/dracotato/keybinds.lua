@@ -14,9 +14,15 @@ wk.add({
   { "<leader>e", oil.toggle_float, desc = "Toggle Oil" },
   { "<leader>r", ":Neotree toggle<CR>", desc = "Toggle Neo-Tree" },
   { "<leader>l", ":Lazy<CR>", desc = "Lazy" },
+  -- Quiting & Saving
   { "<leader>qq", ":qa!<CR>", desc = "Quit All (force)" },
-  { "<leader>qu", ":suspend<CR>", desc = "Suspend Session" },
+  { "<leader>qu", ":suspend<CR>", desc = "Suspend" },
   { "<leader>qw", ":wqa<CR>", desc = "Quit All (saving)" },
+  {
+    "<leader>qs",
+    ":wqa | mksession" .. vim.fn.expand("~/.nvim/") .. vim.fn.getcwd():match("([^/]+)$") .. ".vim" .. "<CR>",
+    desc = "Write, quit & save session (saving)",
+  },
   -- Telescope
   { "<leader>f", group = "Find" },
   { "<leader>p", builtin.find_files, desc = "Telescope Find File" },
