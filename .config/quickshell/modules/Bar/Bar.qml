@@ -82,7 +82,7 @@ Scope {
             width: clock.width + 16
 
             onClicked: {
-              AppState.barPopupVisible = !AppState.barPopupVisible
+              AppState.controlCenterVisible = !AppState.controlCenterVisible
             }
 
             Column {
@@ -158,8 +158,8 @@ Scope {
       AppState.barVisible = !AppState.barVisible
     }
 
-    function togglePopup() {
-      AppState.barPopupVisible = !AppState.barPopupVisible
+    function toggleCenter() {
+      AppState.controlCenterVisible = !AppState.controlCenterVisible
     }
 
     function toggleFloat() {

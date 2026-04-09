@@ -9,7 +9,7 @@ import qs.services
 import qs.components
 
 PopupWindow {
-  id: popupWindow
+  id: root
 
   required property var panel
   required property var screen
@@ -23,8 +23,9 @@ PopupWindow {
   anchor.rect.y: panel.height
 
   color: "transparent"
+  visible: isAnimating || AppState.controlCenterVisible
 
-  visible: isAnimating || AppState.barPopupVisible
+  mask: Region { item: popoutRect }
 
   implicitWidth: screen.width * .4
   implicitHeight: popoutRect.height
@@ -32,12 +33,12 @@ PopupWindow {
   Rectangle {
     id: popoutRect
 
-    y: (AppState.barPopupVisible && screen.name == Hyprland.focusedMonitor.name) ? 0 : -height
+    y: (AppState.controlCenterVisible && screen.name == Hyprland.focusedMonitor.name) ? 0 : -height
 
     Connections {
       target: AppState
 
-      function onBarPopupVisibleChanged() {
+      function onControlCenterVisibleChanged() {
         isAnimating = true
         animTimer.running = true
       }
@@ -62,14 +63,13 @@ PopupWindow {
       onTriggered: {
         // make sure the animation is actually finished
         if (popoutRect.y == -popoutRect.height) {
-          popupWindow.isAnimating = false
+          root.isAnimating = false
         }
       }
     }
 
     ColumnLayout {
       id: popoutContent
-
 
       anchors.top: parent.top
       anchors.topMargin: 24
