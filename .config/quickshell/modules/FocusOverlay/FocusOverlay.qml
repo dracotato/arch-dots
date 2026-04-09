@@ -61,7 +61,7 @@ Scope {
 
         Text {
           anchors.horizontalCenter: parent.horizontalCenter
-          text: FocusTime.formatDuration(FocusTime.breakDuration - FocusTime.timeSpent)
+          text: Utils.formatDuration(FocusTime.breakDuration - FocusTime.timeSpent)
           color: UI.clrPrimaryLt
           font.pixelSize: 20
         }

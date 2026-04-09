@@ -32,11 +32,6 @@ Singleton {
     Osd.showOsd(paused ? "" : "", `Focus ${paused ? "paused" : "continued"}`)
   }
 
-
-  function formatDuration(duration) {
-    return `${Math.floor(duration/60)}:${Math.floor(duration%60).toString().padStart(2, "0")}`
-  }
-
   Timer {
     id: timer
 

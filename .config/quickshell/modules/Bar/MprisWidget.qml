@@ -24,10 +24,6 @@ Item {
   width: 400
   height: 200
 
-  function formatDuration(duration) {
-    return `${Math.floor(duration/60)}:${Math.floor(duration%60).toString().padStart(2, "0")}`
-  }
-
   function updateVolume(value) {
     if (active?.canControl && active?.volumeSupported) {
       active.volume = Math.max(0, Math.min(active.volume+value, 1))
