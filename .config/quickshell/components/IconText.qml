@@ -2,7 +2,7 @@ import QtQuick
 
 import qs.services
 
-Row {
+Item {
   property string textContent: "null"
   property string textColor: UI.clrFg
   property real fontSize: UI.txtSize
@@ -12,25 +12,32 @@ Row {
   property string iconColor: textColor
   property real iconSize: UI.iconSize
 
-  spacing: 4
+  implicitWidth: content.implicitWidth
+  implicitHeight: content.implicitHeight
 
-  Text {
-    color: iconColor
-    font.pixelSize: iconSize
-    font.weight: fontWeight
+  Row {
+    id: content
 
-    anchors.verticalCenter: parent.verticalCenter
+    spacing: 4
 
-    text: icon
-  }
+    Text {
+      color: iconColor
+      font.pixelSize: iconSize
+      font.weight: fontWeight
 
-  Text {
-    color: textColor
-    font.pixelSize: fontSize
-    font.weight: fontWeight
+      anchors.verticalCenter: parent.verticalCenter
 
-    anchors.verticalCenter: parent.verticalCenter
+      text: icon
+    }
 
-    text: textContent
+    Text {
+      color: textColor
+      font.pixelSize: fontSize
+      font.weight: fontWeight
+
+      anchors.verticalCenter: parent.verticalCenter
+
+      text: textContent
+    }
   }
 }
