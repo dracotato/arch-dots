@@ -13,6 +13,9 @@ IconText {
 
   MouseArea {
     anchors.fill: parent
-    onClicked: Quickshell.execDetached(["sh", "-c", "kitty yay -Syu"])
+    onClicked: {
+      Quickshell.execDetached(["kitty", "--hold", "sh", "-c", "yes | yay -Syu"])
+      System.packageUpdates = 0
+    }
   }
 }
