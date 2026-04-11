@@ -85,31 +85,65 @@ PopupWindow {
 
         spacing: 12
 
-        IconText {
-          icon: ""
-          textContent: Time.format(`dddd, MMMM d'${Time.monthDaySuffix}'`)
+        Highlight {
+          IconText {
+            icon: ""
+            textContent: Time.format(`dddd, MMMM d'${Time.monthDaySuffix}'`)
+          }
         }
 
-        Rectangle {
-          Layout.fillHeight: true
-          width: 2
-          color: UI.clrBgLt
+        Highlight {
+          UptimeWidget {}
         }
 
-        UptimeWidget {}
-
-        Rectangle {
-          Layout.fillHeight: true
-          width: 2
-          color: UI.clrBgLt
+        Highlight {
+          UpdatesWidget {}
         }
-
-        UpdatesWidget {}
       }
 
-      MprisWidget {
+      RowLayout {
         Layout.fillWidth: true
+
+        spacing: 12
+
+        MprisWidget {
+          id: mprisWidget
+
+          Layout.fillWidth: true
+        }
+
+        Column {
+          Layout.alignment: Qt.AlignTop
+
+          spacing: 4
+
+          Row {
+            spacing: 4
+
+            Action {
+              icon: ""
+              onClicked: {
+                Quickshell.execDetached(["systemctl", "poweroff"])
+              }
+            }
+
+            Action {
+              icon: ""
+              onClicked: {
+                Quickshell.execDetached(["systemctl", "reboot"])
+              }
+            }
+
+            Action {
+              icon: "󰤄"
+              onClicked: {
+                Quickshell.execDetached(["systemctl", "suspend"])
+              }
+            }
+          }
+        }
       }
+
 
       Rectangle {
         Layout.fillWidth: true

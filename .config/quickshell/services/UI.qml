@@ -20,6 +20,7 @@ Singleton {
 
   readonly property string clrBg: "#13181e"
   readonly property string clrBgLt: "#445"
+  readonly property string clrBgLtr: "#2d2d38"
   readonly property string clrFg: "#eef"
   readonly property string clrFgLt: "#bbc"
   readonly property string clrDanger: "#f22"
