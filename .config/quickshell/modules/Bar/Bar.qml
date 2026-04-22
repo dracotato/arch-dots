@@ -93,7 +93,7 @@ Scope {
               spacing: -2
 
               Text {
-                text: Time.format("h:mm:ss AP")
+                text: Time.format("h:mm:ss")
                 anchors.horizontalCenter: parent.horizontalCenter
               }
             }

@@ -88,7 +88,7 @@ PopupWindow {
         Highlight {
           IconText {
             icon: ""
-            textContent: Time.format(`dddd, MMMM d'${Time.monthDaySuffix}'`)
+            textContent: Time.format(`ddd, yy/MM/dd`)
           }
         }
 
